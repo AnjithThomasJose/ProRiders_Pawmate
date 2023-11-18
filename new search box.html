@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Pawmate Searchbar</title>
+        <link rel="stylesheet" href="style 4.css">
+        
+        
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="searchInput">
+              <input type="text" placeholder="Search Anything..">
+              <div class="resultBox">
+                
+              </div>
+              <div class="icon"><i class="fas fa-search"></i></div>
+            </div>
+          </div>
+          <script>
+            let suggestions = [
+            "Cats",
+    "Dogs",
+    "Cat Breed",
+    "Dog Breed",
+    "American Shorthair",
+    "Persian Cat",
+    "Ragdoll",
+    "Maine Coon",
+    "Golden Retriever",
+    "German Shepherd",
+    "Pomeranian",
+];
+
+// getting all required elements
+const searchInput = document.querySelector(".searchInput");
+const input = searchInput.querySelector("input");
+const resultBox = searchInput.querySelector(".resultBox");
+const icon = searchInput.querySelector(".icon");
+let linkTag = searchInput.querySelector("a");
+let webLink;
+
+// if user press any key and release
+input.onkeyup = (e)=>{
+    let userData = e.target.value; //user enetered data
+    let emptyArray = [];
+    if(userData){
+        emptyArray = suggestions.filter((data)=>{
+            //filtering array value and user characters to lowercase and return only those words which are start with user enetered chars
+            return data.toLocaleLowerCase().startsWith(userData.toLocaleLowerCase()); 
+        });
+        emptyArray = emptyArray.map((data)=>{
+            // passing return data inside li tag
+            return data = '<li>'+ data +'</li>';
+        });
+        searchInput.classList.add("active"); //show autocomplete box
+        showSuggestions(emptyArray);
+        let allList = resultBox.querySelectorAll("li");
+        for (let i = 0; i < allList.length; i++) {
+            //adding onclick attribute in all li tag
+            allList[i].setAttribute("onclick", "select(this)");
+        }
+    }else{
+        searchInput.classList.remove("active"); //hide autocomplete box
+    }
+}
+
+function showSuggestions(list){
+    let listData;
+    if(!list.length){
+        userValue = inputBox.value;
+        listData = '<li>'+ userValue +'</li>';
+    }else{
+        listData = list.join('');
+    }
+    resultBox.innerHTML = listData;
+}
+          </script>
+    </body>
+</html>
